@@ -55,8 +55,8 @@ The system uses a combination of several machine learning algorithms to ensure h
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/moradmarouane/heart-disease-prediction.git
-cd heart-disease-prediction
+git clone [https://github.com/moradmarouane/heart-disease-prediction.git](https://github.com/Zouhair-gh/BackendMobileProject.git)
+
 ```
 
 2. Set up the Flask backend:
@@ -67,7 +67,7 @@ python app.py
 ```
 
 3. Access the web application:
-   - Navigate to 'http://localhost:5000' in your web browser
+   - Navigate to 'http://localhost:5001' in your web browser
 
 4. For the Android application:
    - Open the 'android' folder in Android Studio
