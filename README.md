@@ -55,7 +55,7 @@ The system uses a combination of several machine learning algorithms to ensure h
 
 1. Clone the repository:
 ```bash
-git clone [https://github.com/moradmarouane/heart-disease-prediction.git](https://github.com/Zouhair-gh/BackendMobileProject.git)
+git clone https://github.com/Zouhair-gh/BackendMobileProject.git
 
 ```
 
