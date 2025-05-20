@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Predict - Your Guide to Heart Disease Assessment - Results</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3d5afe;
+            --primary-dark: #0031ca;
+            --primary-light: #8187ff;
+            --accent-color: #ff4081;
+            --text-color: #333333;
+            --light-text: #757575;
+            --bg-color: #f5f5f7;
+            --card-color: #ffffff;
+            --error-color: #d50000;
+            --success-color: #00c853;
+            --warning-color: #ff9800;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(100, 120, 255, 0.8), rgba(61, 90, 254, 0.8));
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .card {
+            background: var(--card-color);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .card-header {
+            background-color: var(--primary-light);
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .results-container {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        
+        .results-intro {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .result-box {
+            text-align: center;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .result-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .result-positive {
+            color: var(--error-color);
+        }
+        
+        .result-negative {
+            color: var(--success-color);
+        }
+        
+        .result-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .result-description {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: var(--light-text);
+        }
+        
+        .result-details-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .detail-item {
+            margin-bottom: 15px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--light-text);
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            color: var(--text-color);
+        }
+        
+        .recommendations {
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .recommendations h3 {
+            color: var(--success-color);
+            margin-bottom: 15px;
+        }
+        
+        .recommendation-list {
+            list-style-type: none;
+        }
+        
+        .recommendation-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .recommendation-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .recommendation-list li i {
+            color: var(--success-color);
+            position: absolute;
+            left: 0;
+            top: 10px;
+        }
+        
+        .warning-note {
+            background-color: #fff3e0;
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            margin-top: 40px;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .card-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content container">
+            <h1><i class="fas fa-heartbeat"></i> Heart Disease Risk Assessment</h1>
+            <p class="subtitle">Your Personalized Risk Analysis Results</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="results-container">
+            <div class="results-intro">
+                <h2>Your Risk Assessment Results</h2>
+                <p>Based on the information you provided, we've analyzed your risk factors.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Analysis Results</h3>
+                </div>
+                <div class="card-body">
+                    <div class="result-box">
+                        <!-- Result content -->
+                        <div class="result-icon {% if 'Not likely' in data.result %}result-negative{% else %}result-positive{% endif %}">
+                            <i class="fas {% if 'Not likely' in data.result %}fa-heart{% else %}fa-heart-broken{% endif %}"></i>
+                        </div>
+                        <div class="result-title">{{ data.result }}</div>
+                        <div class="result-description">
+                            {% if 'Not likely' in data.result %}
+                                The analysis indicates lower risk factors associated with heart disease. Continue maintaining healthy habits and regular check-ups.
+                            {% else %}
+                                The analysis indicates you may have risk factors associated with heart disease. We recommend discussing these results with your healthcare provider.
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="warning-note">
+                        <strong><i class="fas fa-exclamation-triangle"></i> Important Disclaimer:</strong>
+                        <p>This assessment is for educational purposes only and does not constitute medical advice. Please consult with a healthcare professional for proper diagnosis and treatment recommendations.</p>
+                    </div>
+                    
+                    <div class="result-details">
+                        <h3 class="result-details-title">Your Input Values</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Age</span>
+                                <span class="detail-value">{{ data.age }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Sex</span>
+                                <span class="detail-value">{% if data.sex == 1 %}Male{% else %}Female{% endif %}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Chest Pain Type</span>
+                                <span class="detail-value">
+                                    {% if data.cp == 0 %}Typical angina
+                                    {% elif data.cp == 1 %}Atypical angina
+                                    {% elif data.cp == 2 %}Non-anginal pain
+                                    {% elif data.cp == 3 %}Asymptomatic
+                                    {% else %}{{ data.cp }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Resting Blood Pressure</span>
+                                <span class="detail-value">{{ data.trestbps }} mm Hg</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Serum Cholesterol</span>
+                                <span class="detail-value">{{ data.chol }} mg/dl</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Fasting Blood Sugar</span>
+                                <span class="detail-value">{% if data.fbs == 1 %}>126 mg/dl{% else %}<126 mg/dl{% endif %}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Resting ECG Results</span>
+                                <span class="detail-value">
+                                    {% if data.restecg == 0 %}Normal
+                                    {% elif data.restecg == 1 %}ST-T wave abnormality
+                                    {% elif data.restecg == 2 %}Left ventricular hypertrophy
+                                    {% else %}{{ data.restecg }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Maximum Heart Rate</span>
+                                <span class="detail-value">{{ data.thalach }} bpm</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Exercise Induced Angina</span>
+                                <span class="detail-value">{% if data.exang == 1 %}Yes{% else %}No{% endif %}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">ST Depression</span>
+                                <span class="detail-value">{{ data.oldpeak }} mm</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Slope of ST Segment</span>
+                                <span class="detail-value">
+                                    {% if data.slope == 0 %}Upsloping
+                                    {% elif data.slope == 1 %}Flat
+                                    {% elif data.slope == 2 %}Downsloping
+                                    {% else %}{{ data.slope }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Major Vessels</span>
+                                <span class="detail-value">{{ data.ca }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Thalassemia</span>
+                                <span class="detail-value">
+                                    {% if data.thal == 0 %}Normal
+                                    {% elif data.thal == 1 %}Fixed defect
+                                    {% elif data.thal == 2 %}Reversible defect
+                                    {% else %}{{ data.thal }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendations">
+                        <h3><i class="fas fa-clipboard-list"></i> General Heart Health Recommendations</h3>
+                        <ul class="recommendation-list">
+                            <li><i class="fas fa-check-circle"></i> Maintain a heart-healthy diet rich in fruits, vegetables, whole grains, and lean proteins</li>
+                            <li><i class="fas fa-check-circle"></i> Exercise regularly, aiming for at least 150 minutes of moderate activity per week</li>
+                            <li><i class="fas fa-check-circle"></i> Monitor and manage your blood pressure and cholesterol levels</li>
+                            <li><i class="fas fa-check-circle"></i> Avoid smoking and limit alcohol consumption</li>
+                            <li><i class="fas fa-check-circle"></i> Manage stress through relaxation techniques, adequate sleep, and social connections</li>
+                            <li><i class="fas fa-check-circle"></i> Schedule regular check-ups with your healthcare provider</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="btn-container">
+                        <a href="/" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Return to Assessment Form</a>
+                        <a href="#" class="btn" id="print-btn"><i class="fas fa-print"></i> Print Results</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Heart Disease Risk Assessment Tool &copy; 2025 | For educational purposes only</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Print functionality
+        document.getElementById('print-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.print();
+        });
+    </script>
+</body>
+</html>
